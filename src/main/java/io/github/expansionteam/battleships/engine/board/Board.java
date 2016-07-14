@@ -3,7 +3,7 @@ package io.github.expansionteam.battleships.engine.board;
 import java.util.Iterator;
 import java.util.Map;
 
-public class Board implements Iterable {
+public class Board implements Iterable<Field> {
     private Map<Position, Field> map;
 
     Board(Map<Position, Field> fields) {
