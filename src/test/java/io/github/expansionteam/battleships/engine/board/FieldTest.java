@@ -9,21 +9,19 @@ public class FieldTest {
 
     @Test
     public void isOccupied() {
-
         // given
         Field field = new Field(true);
 
-        // then
+        // when & then
         assertTrue(field.isOccupied());
     }
 
     @Test
     public void isNotOccupied() {
-
         // given
         Field field = new Field(false);
 
-        // then
+        // when & then
         assertFalse(field.isOccupied());
     }
 }

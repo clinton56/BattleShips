@@ -1,6 +1,6 @@
 package io.github.expansionteam.battleships.engine.board;
 
-class Position {
+public class Position implements Comparable<Position> {
 
     private final String value;
 
@@ -12,7 +12,12 @@ class Position {
         this.value = value;
     }
 
-    String getValue() {
+    public String getValue() {
         return value;
+    }
+
+    @Override
+    public int compareTo(Position position) {
+        return value.compareTo(position.getValue());
     }
 }

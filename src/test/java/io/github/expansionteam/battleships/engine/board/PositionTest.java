@@ -8,7 +8,6 @@ public class PositionTest {
 
     @Test
     public void createsPosition() {
-
         // given
         Position position = Position.of("test");
 

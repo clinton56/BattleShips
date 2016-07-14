@@ -1,6 +1,6 @@
 package io.github.expansionteam.battleships.engine.board;
 
-class Field {
+public class Field {
 
     private boolean occupied;
 
@@ -8,7 +8,7 @@ class Field {
         this.occupied = occupied;
     }
 
-    boolean isOccupied() {
+    public boolean isOccupied() {
         return occupied;
     }
 }
