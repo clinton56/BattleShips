@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class Board implements Iterable<Field> {
-    Map<Position, Field> map;
+    private Map<Position, Field> map;
 
     Board(Map<Position, Field> fields) {
         this.map = fields;

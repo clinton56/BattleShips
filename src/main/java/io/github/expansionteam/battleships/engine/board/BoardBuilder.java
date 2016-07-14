@@ -9,7 +9,7 @@ public class BoardBuilder implements IBoardBuilder {
     private int size;
 
     public BoardBuilder(BoardSize boardSize) {
-        size = boardSize.getSize();
+        size = boardSize.getValue();
     }
 
     @Override

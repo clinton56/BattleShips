@@ -9,17 +9,17 @@ import static org.testng.Assert.assertEquals;
 public class BoardBuilderTest {
 
     @Test
-
-    public void builBoardFromBoardSize() {
+    public void buildBoardFromBoardSize() {
         // given
         BoardSize boardSizeMock = mock(BoardSize.class);
-        when(boardSizeMock.getSize()).thenReturn(3);
+        when(boardSizeMock.getValue()).thenReturn(3);
 
         BoardBuilder boardBuilder = new BoardBuilder(boardSizeMock);
 
         // when
         boardBuilder.addFields();
         Board board = boardBuilder.build();
+
         // then
         int numberOfNotOccupiedFields = 0;
         for (Field field : board) {
