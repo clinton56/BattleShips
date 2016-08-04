@@ -1,5 +1,19 @@
 package io.github.expansionteam.battleships.engine;
 
-enum Orientation {
-    HORIZONTAL, VERTICAL
+public enum Orientation {
+
+    HORIZONTAL {
+        @Override
+        public String toString(){
+            return "HORIZONTAL";
+        }
+    },
+
+    VERTICAL {
+        @Override
+        public String toString(){
+            return "VERTICAL";
+        }
+    };
+
 }

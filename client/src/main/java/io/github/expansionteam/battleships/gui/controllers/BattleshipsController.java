@@ -3,11 +3,13 @@ package io.github.expansionteam.battleships.gui.controllers;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.inject.Inject;
-import io.github.expansionteam.battleships.gui.models.BoardFactory;
-import io.github.expansionteam.battleships.gui.models.OpponentBoard;
-import io.github.expansionteam.battleships.gui.models.PlayerBoard;
-import io.github.expansionteam.battleships.logic.events.OpponentArrivedEvent;
-import io.github.expansionteam.battleships.logic.events.StartGameEvent;
+import io.github.expansionteam.battleships.common.annotations.EventConsumer;
+import io.github.expansionteam.battleships.common.annotations.EventProducer;
+import io.github.expansionteam.battleships.common.events.GenerateShipsEvent;
+import io.github.expansionteam.battleships.common.events.OpponentArrivedEvent;
+import io.github.expansionteam.battleships.common.events.ShipsGeneratedEvent;
+import io.github.expansionteam.battleships.common.events.StartGameEvent;
+import io.github.expansionteam.battleships.gui.models.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
@@ -17,41 +19,87 @@ import org.apache.log4j.Logger;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@EventProducer
+@EventConsumer
 public class BattleshipsController implements Initializable {
 
     private final static Logger log = Logger.getLogger(BattleshipsController.class.getSimpleName());
 
     @Inject
-    private EventBus eventBus;
+    EventBus eventBus;
 
     @Inject
-    private BoardFactory boardFactory;
+    BoardFactory boardFactory;
 
     @FXML
-    private BorderPane boardArea;
+    BorderPane boardArea;
 
     @FXML
-    private VBox opponentBoardArea;
+    VBox opponentBoardArea;
 
     @FXML
-    private VBox playerBoardArea;
+    VBox playerBoardArea;
+
+    OpponentBoard opponentBoard;
+    PlayerBoard playerBoard;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        OpponentBoard opponentBoard = boardFactory.createEmptyOpponentBoard();
-        PlayerBoard playerBoard = boardFactory.createEmptyPlayerBoard();
-
-        boardArea.setVisible(false);
+        opponentBoard = boardFactory.createEmptyOpponentBoard();
         opponentBoardArea.getChildren().add(opponentBoard);
+
+        playerBoard = boardFactory.createEmptyPlayerBoard();
         playerBoardArea.getChildren().add(playerBoard);
 
+        boardArea.setVisible(false);
+
+        log.debug("Post StartGameEvent.");
         eventBus.post(new StartGameEvent());
     }
 
     @Subscribe
-    public void handleOpponentArrived(OpponentArrivedEvent event) {
-        log.debug("[GUI] Handle OpponentArrivedEvent.");
+    public void handleOpponentArrivedEvent(OpponentArrivedEvent event) {
+        log.debug("Handle OpponentArrivedEvent.");
+
         boardArea.setVisible(true);
+
+        log.debug("Post GenerateShipsEvent.");
+        eventBus.post(new GenerateShipsEvent());
+    }
+
+    @Subscribe
+    public void handleShipsGeneratedEvent(ShipsGeneratedEvent event) {
+        log.debug("Handle ShipsGeneratedEvent.");
+
+        event.ships.stream().forEach(s -> {
+            Position position = Position.of(s.position.x, s.position.y);
+
+            ShipSize size;
+            switch (s.size) {
+                case 1:
+                    size = ShipSize.ONE;
+                    break;
+                case 2:
+                    size = ShipSize.TWO;
+                    break;
+                case 3:
+                    size = ShipSize.THREE;
+                    break;
+                case 4:
+                    size = ShipSize.FOUR;
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+
+            Ship ship;
+            if (s.orientation.equals(ShipsGeneratedEvent.Ship.Orientation.HORIZONTAL)) {
+                ship = Ship.createHorizontal(position, size);
+            } else {
+                ship = Ship.createVertical(position, size);
+            }
+            playerBoard.placeShip(ship);
+        });
     }
 
 }
