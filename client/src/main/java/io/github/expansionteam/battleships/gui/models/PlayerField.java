@@ -28,7 +28,7 @@ public class PlayerField extends Field {
             cssClass = isOccupied ? "field-is-occupied" : "field-is-empty";
         }
 
-        getStyleClass().removeAll();
+        getStyleClass().removeAll(getStyleClass());
         getStyleClass().add(cssClass);
     }
     
