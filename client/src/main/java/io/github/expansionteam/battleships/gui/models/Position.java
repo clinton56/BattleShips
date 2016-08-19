@@ -8,6 +8,8 @@ public class Position {
 
     private final int x;
     private final int y;
+    
+    // TODO: SRP broken. MIN and MAX should be stored in another places. Position shouldn’t validate int value.
     private static final int MAX = 9;
     private static final int MIN = 0;
 
