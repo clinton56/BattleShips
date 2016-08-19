@@ -19,7 +19,7 @@ public class EventHandlerTest {
         EventHandler eventHandler = new EventHandler(eventProcessorMock);
 
         // When
-        eventHandler.handleStartGameEvent(new StartGameEvent());
+        eventHandler.handleEvent(new StartGameEvent());
 
         // Then
         verify(eventProcessorMock).processEvent(isA(StartGameEvent.class));
@@ -32,7 +32,7 @@ public class EventHandlerTest {
         EventHandler eventHandler = new EventHandler(eventProcessorMock);
 
         // When
-        eventHandler.handleGenerateShipsEvent(new GenerateShipsEvent());
+        eventHandler.handleEvent(new GenerateShipsEvent());
 
         // Then
         verify(eventProcessorMock).processEvent(isA(GenerateShipsEvent.class));
@@ -46,7 +46,7 @@ public class EventHandlerTest {
 
         // When
         PositionData position = PositionData.of(1, 1);
-        eventHandler.handleShootPositionEvent(new ShootPositionEvent(position));
+        eventHandler.handleEvent(new ShootPositionEvent(position));
 
         // Then
         verify(eventProcessorMock).processEvent(isA(ShootPositionEvent.class));

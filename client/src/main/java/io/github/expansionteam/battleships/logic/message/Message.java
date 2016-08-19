@@ -8,7 +8,7 @@ public class Message {
     private final BoardOwner boardOwner;
     private final JSONObject data;
 
-    Message(String type, BoardOwner boardOwner, JSONObject data) {
+    public Message(String type, BoardOwner boardOwner, JSONObject data) {
         this.type = type;
         this.boardOwner = boardOwner;
         this.data = data;
