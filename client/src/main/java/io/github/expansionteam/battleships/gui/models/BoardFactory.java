@@ -8,6 +8,8 @@ import io.github.expansionteam.battleships.gui.mouseeventhandlers.MouseExitedEve
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO:  a lot of duplicates, I will think about some changes here 
+
 public class BoardFactory {
 
     private final MouseClickedEventHandler mouseClickedEventHandler;
