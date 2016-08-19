@@ -27,7 +27,8 @@ public abstract class Board extends Parent {
     }
 
     protected abstract Map<Position, ? extends Field> getFieldsByPosition();
-
+    
+    // TODO: this method should be renamed to createBoard
     protected void updateBoard() {
         board = new VBox();
 
