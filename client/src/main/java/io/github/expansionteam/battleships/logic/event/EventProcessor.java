@@ -1,10 +1,7 @@
 package io.github.expansionteam.battleships.logic.event;
 
 import com.google.inject.Inject;
-import io.github.expansionteam.battleships.common.events.GenerateShipsEvent;
-import io.github.expansionteam.battleships.common.events.ShootPositionEvent;
-import io.github.expansionteam.battleships.common.events.StartGameEvent;
-import io.github.expansionteam.battleships.common.events.WaitForOpponentEvent;
+import io.github.expansionteam.battleships.common.events.*;
 import io.github.expansionteam.battleships.logic.AsyncTask;
 import io.github.expansionteam.battleships.logic.message.Message;
 import io.github.expansionteam.battleships.logic.message.MessageFactory;
@@ -27,32 +24,8 @@ class EventProcessor {
         this.messageProcessor = messageProcessor;
     }
 
-    void processEvent(StartGameEvent event) {
-        log.debug("Process: " + event.getClass().getSimpleName());
-
+    void processEvent(EventBase event){
         Message message = messageFactory.createFromEvent(event);
         asyncTask.runLater(new ProcessMessageTask(messageProcessor, message));
     }
-
-    void processEvent(GenerateShipsEvent event) {
-        log.debug("Process: " + event.getClass().getSimpleName());
-
-        Message message = messageFactory.createFromEvent(event);
-        asyncTask.runLater(new ProcessMessageTask(messageProcessor, message));
-    }
-
-    void processEvent(ShootPositionEvent event) {
-        log.debug("Process: " + event.getClass().getSimpleName());
-
-        Message message = messageFactory.createFromEvent(event);
-        asyncTask.runLater(new ProcessMessageTask(messageProcessor, message));
-    }
-
-    void processEvent(WaitForOpponentEvent event) {
-        log.debug("Process: " + event.getClass().getSimpleName());
-
-        Message message = messageFactory.createFromEvent(event);
-        asyncTask.runLater(new ProcessMessageTask(messageProcessor, message));
-    }
-
 }
