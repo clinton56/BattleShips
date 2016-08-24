@@ -55,16 +55,19 @@ class PlayerThread extends Thread {
         return jsonRequest;
     }
 
+    //for me parameter boolean player is unclear.
     private String generateJSONResponse(String jsonRequest, boolean player, RequestState requestState) {
         return jsonHandler.createMessage(jsonRequest, parentThread.getGameObject(), player, requestState);
     }
 
+    // flush() method does nothing in OutputStream
     private void writeToClient(String answer) throws IOException {
         dataOutputStream.writeUTF(answer);
         log.info("Message Sent: " + answer);
         dataOutputStream.flush();
     }
 
+    // this is method is too long.
     @Override
     public void run() {
         try {
