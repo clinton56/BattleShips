@@ -34,7 +34,7 @@ public class OpponentField extends Field {
         this.isOnTarget = false;
         updateCss();
     }
-
+    // TODO: CSS name should be store in a type becouse now somebody can use incorrect name and the spend a lot of time for debugging
     @Override
     protected void updateCss() {
         String cssClass;
